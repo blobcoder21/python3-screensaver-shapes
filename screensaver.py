@@ -3,9 +3,24 @@ import os
 import struct
 import time
 import math
+import sys
+
+progname = sys.argv[0]
+
+# Ensure both width and height are provided via command-line arguments
+if len(sys.argv) != 3:
+    print(f'Usage: python3 {progname} <width> <height>')
+    sys.exit(1)
+
+# Try to convert the provided arguments into integers
+try:
+    WIDTH = int(sys.argv[1])
+    HEIGHT = int(sys.argv[2])
+except ValueError:
+    print(f'Invalid arguments. Both width and height must be integers.')
+    sys.exit(1)
 
 # Constants
-WIDTH, HEIGHT = 800, 480
 TIMEOUT_THRESHOLD = 1  # Time threshold to ignore accidental keypresses (in seconds)
 CLEAR_TIMES = [5, 3]  # Time intervals to clear the screen (5 seconds initially, then 3)
 SHAPE_SIDES = 12  # Number of sides for the dodecagon (12-gon)
@@ -13,7 +28,7 @@ SHAPE_SIDES = 12  # Number of sides for the dodecagon (12-gon)
 # Init Pygame
 pygame.init()
 
-# Force resolution to 800x480 (WVGA) to prevent "off-screen" issues
+# Force resolution based on provided width and height
 screen = pygame.display.set_mode((WIDTH, HEIGHT), pygame.NOFRAME | pygame.FULLSCREEN)
 pygame.mouse.set_visible(False)
 
